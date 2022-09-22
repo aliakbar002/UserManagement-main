@@ -253,7 +253,7 @@ public class UserService {
     //fetch parent organization
     public List<Organization> getParentOrganization(int parentOrganization) {
 
-   List <Organization> organizationList =   organizationRepository.findOrganizationsByParentOrganization(parentOrganization);
+   List <Organization> organizationList =   organizationRepository.findAllOrganizationByParentOrganization(parentOrganization);
 
      return organizationList;
 
@@ -285,6 +285,10 @@ public class UserService {
        }
     }
 
+    public Integer count(int organizationRole) {
+        int org = userOrganizationRepository.countOrganization(organizationRole);
+        return org;
+    }
 }
 
 

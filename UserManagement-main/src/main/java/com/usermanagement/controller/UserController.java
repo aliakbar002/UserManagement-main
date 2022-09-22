@@ -137,14 +137,10 @@ public class UserController {
         return userService.updateSingleRole(id,organizationRoleId);
     }
 
-    //fetch unapproved organization
-//    @GetMapping("/unapproved")
-//    @ResponseBody
-//    public List<Organization> getAllUnApproved(@RequestParam int status){
-//
-//        List<Organization> test = userService.getAllUnApproved(status);
-//        return test;
-//    }
+    @GetMapping("/countAdmin")
+    public Integer countAdmin(@RequestParam int organizationRole){
+        return  userService.count(organizationRole);
+    }
 
 
 }
