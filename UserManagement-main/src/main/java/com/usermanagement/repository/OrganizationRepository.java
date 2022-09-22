@@ -17,10 +17,10 @@ public interface OrganizationRepository extends JpaRepository<Organization,Integ
     Organization findOrganizationById(int id);
 
  //  List <Organization> findOrganizationsByParentOrganizationIsNull();
-    Organization findParentOrganizationById(int parentOrganization);
+    List<Organization> findOrganizationsByParentOrganization(int parentOrganization);
 
-
-    Organization findStatusById(int status);
+    List<Organization> findOrganizationsByStatus(int status);
+   // Organization findStatusById(int status);
   //  Organization findOrganizationsById(int id);
 
   //  List<Organization> findByRolesIn(Collection<String> names);

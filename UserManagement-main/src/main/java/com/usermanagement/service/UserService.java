@@ -251,21 +251,20 @@ public class UserService {
 
 
     //fetch parent organization
-    public Organization getParentOrganization(int parentOrganization) {
+    public List<Organization> getParentOrganization(int parentOrganization) {
 
-    Organization organization =   organizationRepository.findParentOrganizationById(parentOrganization);
+   List <Organization> organizationList =   organizationRepository.findOrganizationsByParentOrganization(parentOrganization);
 
-     return organization;
+     return organizationList;
 
     }
 
     // fetch unapproved status
-    public Organization getStatus(int status) {
+    public List<Organization> getStatus(int status) {
 
+        List<Organization> organizationList = organizationRepository.findOrganizationsByStatus(status);
 
-        Organization organization=organizationRepository.findStatusById(status);
-
-        return organization;
+        return organizationList;
     }
 
     //update single Role

@@ -108,7 +108,7 @@ public class UserController {
     //Task 14
     //Fetch organization against parent
     @GetMapping("/parentOrganization")
-    public Organization getAll(Integer parentOrganization) throws Exception {
+    public List<Organization> getAll(@RequestParam Integer parentOrganization) throws Exception {
         LOGGER.info("Recevied fetch parent organization request");
 
    return userService.getParentOrganization(parentOrganization);
@@ -118,10 +118,11 @@ public class UserController {
     //Task 15
     //fetch unapproved organization
     @GetMapping("/getUnApproved")
-    public ResponseEntity<Organization> status(@RequestParam Integer status){
+    public List<Organization> status(@RequestParam Integer status){
         LOGGER.info("Received get un approved status request");
-        Organization organization = userService.getStatus(status);
-        return new ResponseEntity<>(organization, HttpStatus.OK);
+        return userService.getStatus(status);
+       // Organization organization =  userService.getStatus(status);
+
     }
 
 
