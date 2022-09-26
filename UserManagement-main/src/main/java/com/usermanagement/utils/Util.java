@@ -47,12 +47,16 @@ public class Util {
         }else if(createdById==null || createdById<=0) {
             LOGGER.info("Created by Id must be greater than zero");
             return false;
+        }
+        else if(createdById==null || createdById<=0) {
+            LOGGER.info("Created by Id must be greater than zero");
+            return false;
         }else
             return true;
 
     }
 
-    public static boolean ValidateAddOrganizationRequest(Organization request, Integer parentOrganization, Integer organizationAdmin, Integer createdBy){
+    public static boolean ValidateAddOrganizationRequest(Organization request, Integer parentOrganization, Integer organizationAdmin, Integer createdBy, Integer updatedBy){
         if(request.getName()==null || request.getName().isEmpty()) {
             LOGGER.info("Name is required");
             return false;
@@ -72,11 +76,11 @@ public class Util {
             LOGGER.info("CreatedBy Should not null");
             return false;
         }
+        else if(updatedBy==null || updatedBy<=0) {
+            LOGGER.info("updatedBy Should not null");
+            return false;
+        }
 
-//        else if(organizationId==null || organizationId<=0) {
-//            LOGGER.info("OrganizationId Should not null");
-//            return false;
-//        }
         else
             return true;
 

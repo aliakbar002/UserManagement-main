@@ -27,9 +27,8 @@ public class OrganizationRole implements Serializable {
     private int id;
     @Column(name = "role")
     private String role;
-    @JsonIgnore
+
     @OneToMany(mappedBy = "organizationRole")
-   // @JsonManagedReference sir
     private List<UserOrganization> userOrganizations;
 
 

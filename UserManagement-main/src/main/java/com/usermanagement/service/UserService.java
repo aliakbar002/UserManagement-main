@@ -20,7 +20,6 @@ import java.util.List;
 @Service
 public class UserService {
 
-   //private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger(UserService.class);
     private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger(UserService.class);
     @Autowired
     private UserRepository userRepository;
@@ -69,27 +68,6 @@ public class UserService {
 
     }
 
-    //post mapping for Organization
-//    public ResponseEntity<DefaultResponse> addOrganization(Organization organization, int parentOrganization ,int organizationAdmin) {
-//        if (organizationRepository.findByName(organization.getName())!=null)
-//            return new ResponseEntity<>(new DefaultResponse("Name already Exist","F01",null),HttpStatus.NOT_ACCEPTABLE);
-//          Organization parent=organizationRepository.findById(parentOrganization);
-//     User userId=userRepository.findById(organizationAdmin);
-//
-//        if (userId==null)
-//            return new ResponseEntity<>(new DefaultResponse("User should not null","F01",null), HttpStatus.NOT_ACCEPTABLE);
-//        if (!validateAdmin(userId))
-//            return new ResponseEntity<>(new DefaultResponse("User is not an admin","F01",null),HttpStatus.NOT_ACCEPTABLE);
-//
-//      organization.setUser(userId);
-//
-//        organization.setParentOrganization(parent);
-//        organization.setStatus(0);
-//        organizationRepository.save(organization);
-//
-//        return new ResponseEntity<DefaultResponse>(new DefaultResponse("Organization created successfully", "S01", null), HttpStatus.OK);
-//
-//    }
 
     //post mapping for login
     public User Login(User request) throws Exception {
@@ -162,13 +140,14 @@ public class UserService {
 
 
     //post mapping for Organization
-    public ResponseEntity<DefaultResponse> addOrganization(Organization organization, int parentOrganization , int organizationAdmin, int createdBy) {
+    public ResponseEntity<DefaultResponse> addOrganization(Organization organization, int parentOrganization , int organizationAdmin, int createdBy, int updatedBy) {
         //task 1 organization insertion
         if (organizationRepository.findByName(organization.getName())!=null)
             return new ResponseEntity<>(new DefaultResponse("Name already Exist","F01",null),HttpStatus.NOT_ACCEPTABLE);
         Organization parent=organizationRepository.findById(parentOrganization);
         User orgAdmin=userRepository.findById(organizationAdmin);
         User createBy = userRepository.findById(createdBy);
+        User updateBy = userRepository.findById(updatedBy);
         OrganizationRole organizationRole = organizationRoleRepository.findById(1);
         if (organizationRole==null)
             return new ResponseEntity<>(new DefaultResponse("organizationRole should not null","F01",null), HttpStatus.NOT_ACCEPTABLE);
@@ -178,14 +157,19 @@ public class UserService {
             return new ResponseEntity<>(new DefaultResponse("organization should not null","F01",null), HttpStatus.NOT_ACCEPTABLE);
         if (createBy==null)
             return new ResponseEntity<>(new DefaultResponse("createdBy should not null","F01",null), HttpStatus.NOT_ACCEPTABLE);
+        if (updateBy==null)
+            return new ResponseEntity<>(new DefaultResponse("updatedBy should not null","F01",null), HttpStatus.NOT_ACCEPTABLE);
 //        if (orgId==null)
 //            return new ResponseEntity<>(new DefaultResponse("organizationId should not null","F01",null), HttpStatus.NOT_ACCEPTABLE);
         if (!validateAdmin(createBy))
            return new ResponseEntity<>(new DefaultResponse("User is not an admin","F01",null),HttpStatus.NOT_ACCEPTABLE);
+        if (!validateAdmin(updateBy))
+            return new ResponseEntity<>(new DefaultResponse("User is not an admin","F01",null),HttpStatus.NOT_ACCEPTABLE);
 
         organization.setOrganizationAdmin(orgAdmin);
         organization.setParentOrganization(parent);
         organization.setCreatedBy(createBy);
+        organization.setUpdatedBy(updateBy);
         organization.setStatus(0); //0=pending , 1=approve
         organizationRepository.save(organization);
        // return new ResponseEntity<DefaultResponse>(new DefaultResponse("Organization added successfully", "S01", null), HttpStatus.OK);
@@ -283,10 +267,10 @@ public class UserService {
        }
     }
 
-    public Integer count(int organizationRole) {
-        int org = userOrganizationRepository.countOrganization(organizationRole);
-        return org;
-    }
+//    public Integer count(int organizationRole) {
+//        int org = userOrganizationRepository.countOrganization(organizationRole);
+//        return org;
+//    }
 }
 
 

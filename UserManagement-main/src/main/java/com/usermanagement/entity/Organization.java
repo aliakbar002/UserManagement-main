@@ -43,22 +43,20 @@ public class Organization implements Serializable {
     @JoinColumn(name = "parent_organization")
     private Organization parentOrganization;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)//relation with User
-   // @JsonManagedReference sir
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)//relation with user
     @JoinColumn(name = "organization_admin", referencedColumnName = "id")
     private User organizationAdmin;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "organization")
-  //  @JsonBackReference sir
     private List<UserOrganization> userOrganizations;
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)//relation with Role
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)//relation with user
     @JoinColumn(name = "created_by", referencedColumnName = "id")
     private User createdBy;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)//relation with Role
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)//relation with user
     @JoinColumn(name = "updated_by", referencedColumnName = "id")
     private User updatedBy;
 

@@ -45,7 +45,7 @@ public class User implements Serializable {
     private Timestamp lastLogin;
 
 
-    @JsonIgnore
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)//self relation with User
     @JoinColumn(name = "created_by")
     private User createdBy;
@@ -53,13 +53,11 @@ public class User implements Serializable {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)//relation with Role
- //   @JsonBackReference sir
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")
-  //  @JsonBackReference sir
     private List<UserOrganization> userOrganizations;
 
 
