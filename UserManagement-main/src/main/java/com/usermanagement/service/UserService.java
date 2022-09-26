@@ -162,13 +162,11 @@ public class UserService {
 
 
     //post mapping for Organization
-    public ResponseEntity<DefaultResponse> addOrganization(Organization organization, int parentOrganization , int organizationAdmin, int createdBy, int organizationRoleId ) {
+    public ResponseEntity<DefaultResponse> addOrganization(Organization organization, int parentOrganization , int organizationAdmin, int createdBy) {
         //task 1 organization insertion
-   // Organization org =  organizationRepository.findById(organization.getId());
         if (organizationRepository.findByName(organization.getName())!=null)
             return new ResponseEntity<>(new DefaultResponse("Name already Exist","F01",null),HttpStatus.NOT_ACCEPTABLE);
         Organization parent=organizationRepository.findById(parentOrganization);
-        //Organization orgId = organizationRepository.findOrganizationById(organizationId);
         User orgAdmin=userRepository.findById(organizationAdmin);
         User createBy = userRepository.findById(createdBy);
         OrganizationRole organizationRole = organizationRoleRepository.findById(1);
@@ -253,7 +251,7 @@ public class UserService {
     //fetch parent organization
     public List<Organization> getParentOrganization(int parentOrganization) {
 
-   List <Organization> organizationList =   organizationRepository.findAllOrganizationByParentOrganization(parentOrganization);
+   List <Organization> organizationList =   organizationRepository.findParentOrganizationById(parentOrganization);
 
      return organizationList;
 

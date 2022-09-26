@@ -82,12 +82,12 @@ public class UserController {
 
       //Add Organization // Task 12
     @PostMapping("/organization")
-    public ResponseEntity add(@RequestBody Organization organization,@RequestParam Integer parentOrganization,@RequestParam Integer organizationAdmin,@RequestParam Integer createdBy,@RequestParam Integer organizationRoleId) throws Exception{
+    public ResponseEntity add(@RequestBody Organization organization,@RequestParam Integer parentOrganization,@RequestParam Integer organizationAdmin,@RequestParam Integer createdBy) throws Exception{
         LOGGER.info("Recevied add organization request");
 
         ResponseEntity<DefaultResponse> response;
-        if (Util.ValidateAddOrganizationRequest(organization, parentOrganization, organizationAdmin, createdBy, organizationRoleId))
-            response = userService.addOrganization(organization,parentOrganization,organizationAdmin, createdBy,  organizationRoleId);
+        if (Util.ValidateAddOrganizationRequest(organization, parentOrganization, organizationAdmin, createdBy))
+            response = userService.addOrganization(organization,parentOrganization,organizationAdmin, createdBy);
            else
            response = new ResponseEntity<DefaultResponse>(new DefaultResponse("Requested data is incorrect","F02",organization),HttpStatus.NOT_ACCEPTABLE);
       return response;
@@ -137,6 +137,8 @@ public class UserController {
         return userService.updateSingleRole(id,organizationRoleId);
     }
 
+    //Task 17
+    // fetch organization having more than 1 admin
     @GetMapping("/countAdmin")
     public Integer countAdmin(@RequestParam int organizationRole){
         return  userService.count(organizationRole);

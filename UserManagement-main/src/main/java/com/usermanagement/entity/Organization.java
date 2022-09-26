@@ -9,7 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
@@ -18,7 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "Organization")
-public class Organization {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
+public class Organization implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -38,23 +39,25 @@ public class Organization {
     @Column(name = "status")
     private int status;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_organization")
     private Organization parentOrganization;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)//relation with User
-    @JsonManagedReference
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)//relation with User
+   // @JsonManagedReference sir
     @JoinColumn(name = "organization_admin", referencedColumnName = "id")
     private User organizationAdmin;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "organization")
-    @JsonBackReference
+  //  @JsonBackReference sir
     private List<UserOrganization> userOrganizations;
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)//relation with Role
     @JoinColumn(name = "created_by", referencedColumnName = "id")
     private User createdBy;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)//relation with Role
     @JoinColumn(name = "updated_by", referencedColumnName = "id")
     private User updatedBy;

@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Set;
+
 
 
 @Getter
@@ -18,6 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "user")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,20 +51,16 @@ public class User implements Serializable {
     private User createdBy;
 
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)//relation with Role
-    @JsonBackReference
+ //   @JsonBackReference sir
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
-    @JsonBackReference
+  //  @JsonBackReference sir
     private List<UserOrganization> userOrganizations;
 
-
-    //one to many with Organization
-//    @ManyToOne
-//    @JsonBackReference
-//    @JoinColumn(name = "created_by", referencedColumnName = "id")
-//    private Organization organization;
 
 }

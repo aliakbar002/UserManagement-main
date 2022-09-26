@@ -52,7 +52,7 @@ public class Util {
 
     }
 
-    public static boolean ValidateAddOrganizationRequest(Organization request, Integer parentOrganization, Integer organizationAdmin, Integer createdBy, Integer organizationRoleId){
+    public static boolean ValidateAddOrganizationRequest(Organization request, Integer parentOrganization, Integer organizationAdmin, Integer createdBy){
         if(request.getName()==null || request.getName().isEmpty()) {
             LOGGER.info("Name is required");
             return false;
@@ -72,10 +72,7 @@ public class Util {
             LOGGER.info("CreatedBy Should not null");
             return false;
         }
-        else if(organizationRoleId==null || organizationRoleId<=0) {
-            LOGGER.info("OrganizationRoleId Should not null");
-            return false;
-        }
+
 //        else if(organizationId==null || organizationId<=0) {
 //            LOGGER.info("OrganizationId Should not null");
 //            return false;
