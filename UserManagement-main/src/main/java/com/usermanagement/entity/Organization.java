@@ -51,12 +51,12 @@ public class Organization implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "organization")
     private List<UserOrganization> userOrganizations;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)//relation with user
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)//relation with user
     @JoinColumn(name = "created_by", referencedColumnName = "id")
     private User createdBy;
 
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)//relation with user
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)//relation with user
     @JoinColumn(name = "updated_by", referencedColumnName = "id")
     private User updatedBy;
 

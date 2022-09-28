@@ -159,8 +159,6 @@ public class UserService {
             return new ResponseEntity<>(new DefaultResponse("createdBy should not null","F01",null), HttpStatus.NOT_ACCEPTABLE);
         if (updateBy==null)
             return new ResponseEntity<>(new DefaultResponse("updatedBy should not null","F01",null), HttpStatus.NOT_ACCEPTABLE);
-//        if (orgId==null)
-//            return new ResponseEntity<>(new DefaultResponse("organizationId should not null","F01",null), HttpStatus.NOT_ACCEPTABLE);
         if (!validateAdmin(createBy))
            return new ResponseEntity<>(new DefaultResponse("User is not an admin","F01",null),HttpStatus.NOT_ACCEPTABLE);
         if (!validateAdmin(updateBy))
@@ -267,10 +265,16 @@ public class UserService {
        }
     }
 
-//    public Integer count(int organizationRole) {
-//        int org = userOrganizationRepository.countOrganization(organizationRole);
-//        return org;
-//    }
+    // fetching Organizations contains more than 1 admin
+    public List<UserOrganization> getByAdmins() {
+
+        List<UserOrganization> adminList = userOrganizationRepository.findByAdmin();
+        return adminList;
+
+
+    }
+
+
 }
 
 

@@ -3,6 +3,7 @@ package com.usermanagement.controller;
 import com.usermanagement.entity.Organization;
 import com.usermanagement.entity.User;
 import com.usermanagement.entity.UserOrganization;
+import com.usermanagement.repository.UserOrganizationRepository;
 import com.usermanagement.response.DefaultResponse;
 import com.usermanagement.service.UserService;
 import com.usermanagement.utils.Util;
@@ -139,10 +140,11 @@ public class UserController {
 
     //Task 17
     // fetch organization having more than 1 admin
-//    @GetMapping("/countAdmin")
-//    public Integer countAdmin(@RequestParam int organizationRole){
-//        return  userService.count(organizationRole);
-//    }
+    @GetMapping("/countAdmin")
+    public List<UserOrganization> countAdmin(){
+        LOGGER.info("Recevied fetch organizations by admins request");
+        return  userService.getByAdmins();
+    }
 
 
 }
